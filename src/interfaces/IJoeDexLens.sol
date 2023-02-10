@@ -2,12 +2,14 @@
 
 pragma solidity ^0.8.0;
 
-import "joe-v2/interfaces/ILBRouter.sol";
-import "joe-v2/interfaces/IJoeFactory.sol";
-import "solrary/access/ISafeAccessControlEnumerable.sol";
+import {IJoeFactory} from "joe-v2/interfaces/IJoeFactory.sol";
+import {ILBFactory} from "joe-v2/interfaces/ILBFactory.sol";
+import {ILBLegacyFactory} from "joe-v2/interfaces/ILBLegacyFactory.sol";
+import {ILBLegacyRouter} from "joe-v2/interfaces/ILBLegacyRouter.sol";
+import {ILBRouter} from "joe-v2/interfaces/ILBRouter.sol";
+import {ISafeAccessControlEnumerable} from "solrary/access/ISafeAccessControlEnumerable.sol";
 
-import "../interfaces/AggregatorV3Interface.sol";
-import "joe-v2/LBErrors.sol";
+import {AggregatorV3Interface} from "../interfaces/AggregatorV3Interface.sol";
 
 /// @title Interface of the Joe Dex Lens contract
 /// @author Trader Joe
@@ -30,6 +32,7 @@ interface IJoeDexLens is ISafeAccessControlEnumerable {
     enum dfType {
         V1,
         V2,
+        V2_1,
         CHAINLINK
     }
 
@@ -60,9 +63,15 @@ interface IJoeDexLens is ISafeAccessControlEnumerable {
 
     function getUSDStableCoin() external view returns (address usd);
 
+    function getLegacyRouterV2() external view returns (ILBLegacyRouter legacyRouterV2);
+
     function getRouterV2() external view returns (ILBRouter routerV2);
 
     function getFactoryV1() external view returns (IJoeFactory factoryV1);
+
+    function getLegacyFactoryV2() external view returns (ILBLegacyFactory legacyFactoryV2);
+
+    function getFactoryV2() external view returns (ILBFactory factoryV2);
 
     function getUSDDataFeeds(address token) external view returns (DataFeed[] memory dataFeeds);
 

@@ -9,24 +9,24 @@ contract TestChainlink is TestHelper {
     MockAggregator aggregator;
     address token;
 
-    function setUp() public {
-        address MockUSDC = address(new ERC20MockDecimals(6));
-        address MockWNative = address(new ERC20MockDecimals(18));
+    function setUp() public override {
+        vm.createSelectFork(vm.rpcUrl("fuji"), 14_541_000);
+        super.setUp();
 
         token = address(new ERC20MockDecimals(18));
 
-        joeDexLens = new JoeDexLens(LBRouter, joeFactory, MockWNative, MockUSDC);
+        joeDexLens = new JoeDexLens(lbRouter, USDC);
         aggregator = new MockAggregator();
     }
 
-    function testChainlinkUSDPrice() public {
+    function test_ChainlinkUSDPrice() public {
         IJoeDexLens.DataFeed memory df = IJoeDexLens.DataFeed(address(aggregator), 1, IJoeDexLens.dfType.CHAINLINK);
         joeDexLens.addUSDDataFeed(token, df);
 
         assertEq(joeDexLens.getTokenPriceUSD(token), 1e6);
     }
 
-    function testChainlinkWNativePrice() public {
+    function test_ChainlinkWNativePrice() public {
         IJoeDexLens.DataFeed memory df = IJoeDexLens.DataFeed(address(aggregator), 1, IJoeDexLens.dfType.CHAINLINK);
         joeDexLens.addNativeDataFeed(token, df);
 

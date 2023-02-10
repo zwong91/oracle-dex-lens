@@ -8,19 +8,21 @@ import "../src/JoeDexLens.sol";
 import "./TestHelper.sol";
 
 contract TestJoeDexLens is TestHelper {
-    function setUp() public {
+    function setUp() public override {
         vm.createSelectFork(vm.rpcUrl("fuji"), 14_541_000);
-        joeDexLens = new JoeDexLens(ILBRouter(LBRouter), IJoeFactory(factoryV1), wNative, USDC);
+        super.setUp();
+
+        joeDexLens = new JoeDexLens(lbRouter, USDC);
     }
 
-    function testRevertOnOwnerFunctions() public {
+    function test_RevertOnOwnerFunctions() public {
         vm.startPrank(ALICE);
 
         address[] memory usdcSingleton = getAddressSingleton(USDC);
         address[] memory wNativeSingleton = getAddressSingleton(wNative);
 
         // Should pass
-        joeDexLens.getRouterV2();
+        joeDexLens.getLegacyRouterV2();
         joeDexLens.getFactoryV1();
         joeDexLens.getUSDDataFeeds(USDC);
         joeDexLens.getNativeDataFeeds(wNative);
@@ -149,11 +151,11 @@ contract TestJoeDexLens is TestHelper {
         vm.stopPrank();
     }
 
-    function testReturnRouter() public {
-        assertEq(address(joeDexLens.getRouterV2()), address(LBRouter));
+    function test_ReturnRouter() public {
+        assertEq(address(joeDexLens.getLegacyRouterV2()), address(LBLegacyRouter));
     }
 
-    function testReturnFactory() public {
+    function test_ReturnFactory() public {
         assertEq(address(joeDexLens.getFactoryV1()), address(factoryV1));
     }
 }
