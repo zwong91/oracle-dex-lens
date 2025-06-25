@@ -21,7 +21,11 @@ contract Deploy is Script {
         address w_native;
     }
 
-    string[] chains = ["avalanche"];
+    string[] chains = ["bnb_smart_chain_testnet"];
+
+    function setUp() public {
+        _setupBSCTestnet();
+    }
 
     JoeDexLens[] listJoeDexLens = new JoeDexLens[](chains.length);
     ProxyAdmin[] listProxyAdmin = new ProxyAdmin[](chains.length);
@@ -72,8 +76,9 @@ contract Deploy is Script {
             listProxyAdmin[i] = proxyAdmin;
             listTransparentUpgradeableProxy[i] = proxy;
 
-            Ownable(address(proxyAdmin)).transferOwnership(deployment.multisig);
-            JoeDexLens(address(proxy)).setPendingOwner(deployment.multisig);
+            // Note: Ownership transfer should be done manually after deployment
+            // proxyAdmin.transferOwnership(deployment.multisig);
+            // JoeDexLens(address(proxy)).setPendingOwner(deployment.multisig);
 
             vm.stopBroadcast();
             /**
@@ -83,5 +88,16 @@ contract Deploy is Script {
             implementation.getFactoryV2_1();
         }
         return (listJoeDexLens, listProxyAdmin, listTransparentUpgradeableProxy);
+    }
+
+    function _setupBSCTestnet() private {
+        StdChains.setChain(
+            "bnb_smart_chain_testnet",
+            StdChains.ChainData({
+                name: "BNB Smart Chain Testnet",
+                chainId: 97,
+                rpcUrl: "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
+            })
+        );
     }
 }

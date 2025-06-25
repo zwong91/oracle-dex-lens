@@ -2,19 +2,17 @@
 src = 'src'
 out = 'out'
 libs = ['lib']
+optimizer = true
+optimizer_runs = 1000000
+via_ir = true
 
 fs_permissions = [{ access = "read", path = "./"}]
 
 [rpc_endpoints]
-arbitrum = "https://arb1.arbitrum.io/rpc"
-avalanche = "https://api.avax.network/ext/bc/C/rpc"
 bsc = "https://bscrpc.com"
-fuji = "https://api.avax-test.network/ext/bc/C/rpc"
+bsc_testnet = "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
 
 [etherscan]
-arbitrum = { url = "https://api.arbiscan.io/api", key = "${ARBISCAN_KEY}", chain = "arbitrum" }
-avalanche = { key = "${SNOWTRACE_API_KEY}", chain = "avalanche" }
 bsc = { key = "${BSCSCAN_API_KEY}", chain = "bsc" }
-fuji = { key = "${SNOWTRACE_API_KEY}", chain = "fuji" }
 
 # See more config options https://github.com/foundry-rs/foundry/tree/master/config
