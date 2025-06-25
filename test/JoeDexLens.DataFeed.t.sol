@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 
 import "lb-dlmm/interfaces/ILBRouter.sol";
 import "openzeppelin/proxy/transparent/TransparentUpgradeableProxy.sol";
+import "openzeppelin/access/Ownable.sol";
 
 import "../src/JoeDexLens.sol";
 import "./TestHelper.sol";
@@ -152,7 +153,7 @@ contract TestJoeDexLens is TestHelper {
 
         vm.label(newToken1, "newToken1");
 
-        vm.prank(lbFactory.owner());
+        vm.prank(Ownable(address(lbFactory)).owner());
         lbFactory.addQuoteAsset(IERC20(newToken0));
 
         address pair1 = createLBPairV2_1(newToken1, newToken0, ID_0_25_25bp);

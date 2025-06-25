@@ -44,7 +44,7 @@ contract Deploy is Script {
              */
             vm.startBroadcast(deployerPrivateKey);
 
-            ProxyAdmin proxyAdmin = new ProxyAdmin();
+            ProxyAdmin proxyAdmin = new ProxyAdmin(msg.sender);
             JoeDexLens implementation = new JoeDexLens(
                 ILBFactory(deployment.lbFactory2_2),
                 ILBFactory(deployment.lbFactory2_1),
