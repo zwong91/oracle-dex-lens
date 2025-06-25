@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "joe-v2/interfaces/ILBRouter.sol";
+import "lb-dlmm/interfaces/ILBRouter.sol";
 import "openzeppelin/proxy/transparent/TransparentUpgradeableProxy.sol";
 
 import "../src/JoeDexLens.sol";

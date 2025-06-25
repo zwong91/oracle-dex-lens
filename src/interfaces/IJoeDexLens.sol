@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.0;
 
-import {IJoeFactory} from "joe-v2/interfaces/IJoeFactory.sol";
-import {ILBFactory} from "joe-v2/interfaces/ILBFactory.sol";
-import {ILBLegacyFactory} from "joe-v2/interfaces/ILBLegacyFactory.sol";
+import {IJoeFactory} from "lb-dlmm/interfaces/IJoeFactory.sol";
+import {ILBFactory} from "lb-dlmm/interfaces/ILBFactory.sol";
+import {ILBLegacyFactory} from "lb-dlmm/interfaces/ILBLegacyFactory.sol";
 import {ISafeAccessControlEnumerable} from "solrary/access/ISafeAccessControlEnumerable.sol";
 
 import {AggregatorV3Interface} from "../interfaces/AggregatorV3Interface.sol";

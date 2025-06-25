@@ -2,16 +2,16 @@
 
 pragma solidity ^0.8.0;
 
-import {Constants} from "joe-v2/libraries/Constants.sol";
-import {PriceHelper} from "joe-v2/libraries/PriceHelper.sol";
-import {JoeLibrary} from "joe-v2/libraries/JoeLibrary.sol";
-import {IJoeFactory} from "joe-v2/interfaces/IJoeFactory.sol";
-import {IJoePair} from "joe-v2/interfaces/IJoePair.sol";
-import {ILBFactory} from "joe-v2/interfaces/ILBFactory.sol";
-import {ILBLegacyFactory} from "joe-v2/interfaces/ILBLegacyFactory.sol";
-import {ILBLegacyPair} from "joe-v2/interfaces/ILBLegacyPair.sol";
-import {ILBPair} from "joe-v2/interfaces/ILBPair.sol";
-import {Uint256x256Math} from "joe-v2/libraries/math/Uint256x256Math.sol";
+import {Constants} from "lb-dlmm/libraries/Constants.sol";
+import {PriceHelper} from "lb-dlmm/libraries/PriceHelper.sol";
+import {JoeLibrary} from "lb-dlmm/libraries/JoeLibrary.sol";
+import {IJoeFactory} from "lb-dlmm/interfaces/IJoeFactory.sol";
+import {IJoePair} from "lb-dlmm/interfaces/IJoePair.sol";
+import {ILBFactory} from "lb-dlmm/interfaces/ILBFactory.sol";
+import {ILBLegacyFactory} from "lb-dlmm/interfaces/ILBLegacyFactory.sol";
+import {ILBLegacyPair} from "lb-dlmm/interfaces/ILBLegacyPair.sol";
+import {ILBPair} from "lb-dlmm/interfaces/ILBPair.sol";
+import {Uint256x256Math} from "lb-dlmm/libraries/math/Uint256x256Math.sol";
 import {IERC20Metadata, IERC20} from "openzeppelin/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeAccessControlEnumerable} from "solrary/access/SafeAccessControlEnumerable.sol";
 

@@ -3,12 +3,12 @@
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";
-import "joe-v2/interfaces/ILBRouter.sol";
-import "joe-v2/interfaces/ILBFactory.sol";
-import "joe-v2/interfaces/IJoeRouter02.sol";
-import "joe-v2/LBPair.sol";
-import "joe-v2/LBRouter.sol";
-import "joe-v2/LBFactory.sol";
+import "lb-dlmm/interfaces/ILBRouter.sol";
+import "lb-dlmm/interfaces/ILBFactory.sol";
+import "lb-dlmm/interfaces/IJoeRouter02.sol";
+import "lb-dlmm/LBPair.sol";
+import "lb-dlmm/LBRouter.sol";
+import "lb-dlmm/LBFactory.sol";
 import "openzeppelin/token/ERC20/IERC20.sol";
 
 import "../src/JoeDexLens.sol";

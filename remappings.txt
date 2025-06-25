@@ -1,5 +1,6 @@
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
 openzeppelin/=lib/openzeppelin-contracts/contracts/
-joe-v2/=lib/joe-v2/src/
+@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/
+lb-dlmm/=lib/lb-dlmm/src/
 solrary/=lib/solrary/src/
