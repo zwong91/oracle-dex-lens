@@ -11,4 +11,4 @@
 [submodule "lib/lb-dlmm"]
 	path = lib/lb-dlmm
 	url = https://github.com/zwong91/lb-dlmm.git
-	branch = v2.2
+	branch = dev
