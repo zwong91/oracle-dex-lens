@@ -29,7 +29,7 @@ verify:
 
 # Forge script version (limited output due to forge limitations)
 call-joedexlens-forge:
-	forge script script/call-joedexlens.s.sol:CallJoeDexLens --fork-url https://data-seed-prebsc-1-s1.bnbchain.org:8545
+	forge script script/call-joedexlens.s.sol:CallJoeDexLens --rpc-url bsc_testnet
 
 # Cast version (recommended - full output)
 call-joedexlens:
