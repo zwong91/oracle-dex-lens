@@ -10,10 +10,10 @@ import "../src/JoeDexLens.sol";
 import "./TestHelper.sol";
 
 contract TestJoeDexLens is TestHelper {
-    uint256 AVAX_PRICE = 35.7e18;
+    uint256 BNB_PRICE = 661.1e18;
 
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("avalanche"), 41284321);
+        vm.createSelectFork(vm.rpcUrl("bsc_testnet"), 41004321);
         super.setUp();
 
         JoeDexLens imp = new JoeDexLens(lbFactory, lbFactory, LBLegacyFactory, factoryV1, wNative);
@@ -21,45 +21,45 @@ contract TestJoeDexLens is TestHelper {
         joeDexLens = JoeDexLens(address(new TransparentUpgradeableProxy(address(imp), address(1), "")));
 
         IJoeDexLens.DataFeed[] memory dataFeeds = new IJoeDexLens.DataFeed[](2);
-        dataFeeds[0] = IJoeDexLens.DataFeed(wNative, AVAX_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1);
-        dataFeeds[1] = IJoeDexLens.DataFeed(wNative, AVAX_USDT_20BP, 100, IJoeDexLens.DataFeedType.V2_1);
+        dataFeeds[0] = IJoeDexLens.DataFeed(wNative, BNB_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1);
+        dataFeeds[1] = IJoeDexLens.DataFeed(wNative, BNB_USDT_20BP, 100, IJoeDexLens.DataFeedType.V2_1);
 
         joeDexLens.initialize(dataFeeds);
     }
 
     function test_GetNativePrice() public {
-        assertApproxEqRel(joeDexLens.getTokenPriceUSD(wNative), AVAX_PRICE, 1e16, "test_GetNativePrice::1");
+        assertApproxEqRel(joeDexLens.getTokenPriceUSD(wNative), BNB_PRICE, 1e16, "test_GetNativePrice::1");
         assertEq(joeDexLens.getTokenPriceNative(wNative), 1e18, "test_GetNativePrice::2");
     }
 
     function test_GetTokenPriceUsingNativeDataFeeds() public {
-        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, AVAX_USDC_V1, 1000, IJoeDexLens.DataFeedType.V1));
+        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, BNB_USDC_V1, 1000, IJoeDexLens.DataFeedType.V1));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeDataFeeds::1");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingNativeDataFeeds::2"
         );
 
-        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, AVAX_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1));
+        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, BNB_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeDataFeeds::3");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingNativeDataFeeds::4"
         );
 
-        joeDexLens.removeDataFeed(USDC, AVAX_USDC_20BP);
-        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, AVAX_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_2));
+        joeDexLens.removeDataFeed(USDC, BNB_USDC_20BP);
+        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, BNB_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_2));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeDataFeeds::5");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingNativeDataFeeds::6"
         );
@@ -67,53 +67,53 @@ contract TestJoeDexLens is TestHelper {
 
     function test_GetTokenPriceUsingDataFeeds() public {
         joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(JOE, JOE_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_1));
-        joeDexLens.addDataFeed(JOE, IJoeDexLens.DataFeed(wNative, JOE_AVAX_15BP, 1000, IJoeDexLens.DataFeedType.V2_1));
+        joeDexLens.addDataFeed(JOE, IJoeDexLens.DataFeed(wNative, JOE_BNB_15BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingDataFeeds::1");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingDataFeeds::2"
         );
 
         joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(WETH, ETH_USDC_15BP, 1000, IJoeDexLens.DataFeedType.V2_1));
-        joeDexLens.addDataFeed(WETH, IJoeDexLens.DataFeed(wNative, AVAX_ETH_10BP, 1000, IJoeDexLens.DataFeedType.V2_1));
+        joeDexLens.addDataFeed(WETH, IJoeDexLens.DataFeed(wNative, BNB_ETH_10BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingDataFeeds::3");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingDataFeeds::4"
         );
 
-        joeDexLens.addDataFeed(WETH, IJoeDexLens.DataFeed(wNative, AVAX_ETH_V1, 1000, IJoeDexLens.DataFeedType.V1));
+        joeDexLens.addDataFeed(WETH, IJoeDexLens.DataFeed(wNative, BNB_ETH_V1, 1000, IJoeDexLens.DataFeedType.V1));
 
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingDataFeeds::5");
         assertApproxEqAbs(
             joeDexLens.getTokenPriceNative(USDC),
-            uint256(1e36) / AVAX_PRICE,
+            uint256(1e36) / BNB_PRICE,
             0.05e18,
             "test_GetTokenPriceUsingDataFeeds::6"
         );
     }
 
     function test_GetTokenPriceUsingNativeFallback() public {
-        // Will use (fallback: V2_1 USDC/AVAX, V1 USDC/AVAX) -> AVAX USDC oracle
+        // Will use (fallback: V2_1 USDC/BNB, V1 USDC/BNB) -> BNB USDC oracle
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeFallback::1");
 
         joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(JOE, JOE_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
-        // Will use V2_1 JOE/USDC -> (fallback: V2_1 JOE/AVAX, V1 JOE/AVAX) -> AVAX USDC oracle
+        // Will use V2_1 UNC/USDC -> (fallback: V2_1 UNC/BNB, V1 UNC/BNB) -> BNB USDC oracle
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeFallback::2");
 
         joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(WETH, ETH_USDC_15BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
         // Will use:
-        // (V2_1 JOE/USDC, V2_1 ETH/USDC)
-        // -> (fallback joe/usdc: V2_1 JOE/AVAX, V1 JOE/AVAX, fallback eth/usdc: V2_1 ETH/AVAX, V1 ETH/AVAX)
-        // -> AVAX USDC oracle
+        // (V2_1 UNC/USDC, V2_1 ETH/USDC)
+        // -> (fallback joe/usdc: V2_1 UNC/BNB, V1 UNC/BNB, fallback eth/usdc: V2_1 ETH/BNB, V1 ETH/BNB)
+        // -> BNB USDC oracle
         assertApproxEqAbs(joeDexLens.getTokenPriceUSD(USDC), 1e18, 0.05e18, "test_GetTokenPriceUsingNativeFallback::3");
     }
 
@@ -132,7 +132,7 @@ contract TestJoeDexLens is TestHelper {
 
         assertEq(joeDexLens.getTokenPriceUSD(address(newToken0)), 0, "test_GetTokenPriceUsingFallback::1");
 
-        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, AVAX_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1));
+        joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(wNative, BNB_USDC_20BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
         address[] memory trustedTokens = new address[](1);
         trustedTokens[0] = USDC;
@@ -141,7 +141,7 @@ contract TestJoeDexLens is TestHelper {
 
         assertApproxEqRel(
             joeDexLens.getTokenPriceNative(address(newToken0)),
-            uint256(1e36) / AVAX_PRICE * 10,
+            uint256(1e36) / BNB_PRICE * 10,
             0.01e18,
             "test_GetTokenPriceUsingFallback::2"
         );
@@ -174,7 +174,7 @@ contract TestJoeDexLens is TestHelper {
 
         assertApproxEqRel(
             joeDexLens.getTokenPriceNative(address(newToken1)),
-            uint256(1e36) * 25 / 10 / AVAX_PRICE,
+            uint256(1e36) * 25 / 10 / BNB_PRICE,
             0.01e18,
             "test_GetTokenPriceUsingFallback::5"
         );
@@ -196,7 +196,7 @@ contract TestJoeDexLens is TestHelper {
     function test_revert_BadDataFeeds() public {
         joeDexLens.addDataFeed(USDC, IJoeDexLens.DataFeed(JOE, JOE_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 
-        // Revert if a cycle is detected (USDC -> JOE -> USDC -> JOE -> ...)
+        // Revert if a cycle is detected (USDC -> UNC -> USDC -> UNC -> ...)
         vm.expectRevert();
         joeDexLens.addDataFeed(JOE, IJoeDexLens.DataFeed(USDC, JOE_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_1));
 

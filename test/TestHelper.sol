@@ -35,11 +35,11 @@ abstract contract TestHelper is Test {
     uint24 internal constant ID_ONE = 2 ** 23;
 
     address public constant tokenOwner = 0xFFC08538077a0455E0F4077823b1A0E3e18Faf0b;
-    address public constant factoryOwner = 0x2fbB61a10B96254900C03F1644E9e1d2f5E76DD2;
-    address public constant avaxDataFeed = 0x0A77230d17318075983913bC2145DB16C7366156;
+    address public constant factoryOwner = 0xE0A051f87bb78f38172F633449121475a193fC1A;
+    address public constant bnbDataFeed = 0x0A77230d17318075983913bC2145DB16C7366156;
 
-    ILBRouter public constant lbRouter = ILBRouter(0xb4315e873dBcf96Ffd0acd8EA43f689D8c20fB30);
-    ILBFactory public lbFactory = ILBFactory(0x8e42f2F4101563bF679975178e880FD87d3eFd4e);
+    ILBRouter public constant lbRouter = ILBRouter(0xe98efCE22A8Ec0dd5dDF6C1A81B6ADD740176E98);
+    ILBFactory public lbFactory = ILBFactory(0x7D73A6eFB91C89502331b2137c2803408838218b);
     ILBLegacyFactory public constant LBLegacyFactory = ILBLegacyFactory(0x6E77932A92582f504FF6c4BdbCef7Da6c198aEEf);
     ILBLegacyRouter public constant LBLegacyRouter = ILBLegacyRouter(0xE3Ffc583dC176575eEA7FD9dF2A7c65F7E23f4C3);
     IJoeFactory public constant factoryV1 = IJoeFactory(0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10);
@@ -52,17 +52,17 @@ abstract contract TestHelper is Test {
     address public constant JOE = 0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd;
     address public constant ZJOE = 0x769bfeb9fAacD6Eb2746979a8dD0b7e9920aC2A4;
 
-    address public constant AVAX_USDC_V1 = 0xf4003F4efBE8691B60249E6afbD307aBE7758adb;
-    address public constant AVAX_USDT_V1 = 0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73;
-    address public constant AVAX_ETH_V1 = 0xFE15c2695F1F920da45C30AAE47d11dE51007AF9;
+    address public constant BNB_USDC_V1 = 0xf4003F4efBE8691B60249E6afbD307aBE7758adb;
+    address public constant BNB_USDT_V1 = 0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73;
+    address public constant BNB_ETH_V1 = 0xFE15c2695F1F920da45C30AAE47d11dE51007AF9;
 
-    address public constant AVAX_USDC_20BP = 0xD446eb1660F766d533BeCeEf890Df7A69d26f7d1;
-    address public constant AVAX_USDT_20BP = 0x87EB2F90d7D0034571f343fb7429AE22C1Bd9F72;
-    address public constant AVAX_ETH_10BP = 0x1901011a39B11271578a1283D620373aBeD66faA;
+    address public constant BNB_USDC_20BP = 0xD446eb1660F766d533BeCeEf890Df7A69d26f7d1;
+    address public constant BNB_USDT_20BP = 0x87EB2F90d7D0034571f343fb7429AE22C1Bd9F72;
+    address public constant BNB_ETH_10BP = 0x1901011a39B11271578a1283D620373aBeD66faA;
     address public constant ETH_USDC_15BP = 0x51146e0bF2dCC368DE6F5201FE7c427DA28D05De;
     address public constant JOE_USDC_25BP = 0x9A0A97D8005d9f783A054aa5CD8878bB0CCF414D;
     address public constant DAI_USDC_1BP = 0x2f1DA4bafd5f2508EC2e2E425036063A374993B6;
-    address public constant JOE_AVAX_15BP = 0x9f8973FB86b35C307324eC31fd81Cf565E2F4a63;
+    address public constant JOE_BNB_15BP = 0x9f8973FB86b35C307324eC31fd81Cf565E2F4a63;
 
     JoeDexLens public joeDexLens;
 
@@ -79,13 +79,13 @@ abstract contract TestHelper is Test {
         vm.label(WETH, "weth");
         vm.label(wNative, "wNative");
 
-        vm.label(AVAX_USDC_V1, "avax_usdc_v1");
-        vm.label(AVAX_USDT_V1, "avax_usdt_v1");
-        vm.label(AVAX_ETH_V1, "avax_eth_v1");
+        vm.label(BNB_USDC_V1, "bnb_usdc_v1");
+        vm.label(BNB_USDT_V1, "bnb_usdt_v1");
+        vm.label(BNB_ETH_V1, "bnb_eth_v1");
 
-        vm.label(AVAX_USDC_20BP, "avax_usdc_20bp");
-        vm.label(AVAX_USDT_20BP, "avax_usdt_20bp");
-        vm.label(AVAX_ETH_10BP, "avax_eth_10bp");
+        vm.label(BNB_USDC_20BP, "bnb_usdc_20bp");
+        vm.label(BNB_USDT_20BP, "bnb_usdt_20bp");
+        vm.label(BNB_ETH_10BP, "bnb_eth_10bp");
         vm.label(JOE_USDC_25BP, "joe_usdc_25bp");
         vm.label(DAI_USDC_1BP, "dai_usdc_1bp");
     }

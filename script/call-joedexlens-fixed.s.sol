@@ -18,7 +18,6 @@ contract CallJoeDexLensFixed is Script {
         console.log("Contract:", JOEDEXLENS_PROXY);
         console.log("");
         
-        // 分步骤调用，避免复杂的 try-catch
         testBasicInfo(joeDexLens);
         testPrices(joeDexLens);
         testDataFeeds(joeDexLens);
