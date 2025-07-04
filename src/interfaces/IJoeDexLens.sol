@@ -41,8 +41,8 @@ interface IJoeDexLens is ISafeAccessControlEnumerable {
         V1,
         V2,
         V2_1,
-        CHAINLINK,
-        V2_2
+        V2_2,
+        CHAINLINK
     }
 
     /**

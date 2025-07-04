@@ -16,7 +16,7 @@ contract TestJoeDexLens is TestHelper {
     IJoeFactory private _factoryV1 = IJoeFactory(address(0x1000000000000000000000000000000000000003));
 
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("bsc_testnet"), 40000000);
+        vm.createSelectFork(vm.rpcUrl("bsc_testnet"), 44000000);
         super.setUp();
 
         JoeDexLens imp = new JoeDexLens(lbFactory, lbFactory, _legacyFactory, _factoryV1, wNative);
@@ -24,8 +24,8 @@ contract TestJoeDexLens is TestHelper {
         joeDexLens = JoeDexLens(address(new TransparentUpgradeableProxy(address(imp), address(1), "")));
 
         IJoeDexLens.DataFeed[] memory dataFeeds = new IJoeDexLens.DataFeed[](2);
-        dataFeeds[0] = IJoeDexLens.DataFeed(wNative, BNB_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_2);
-        dataFeeds[1] = IJoeDexLens.DataFeed(wNative, BNB_USDT_10BP, 100, IJoeDexLens.DataFeedType.V2_2);
+        dataFeeds[0] = IJoeDexLens.DataFeed(USDC, BNB_USDC_25BP, 1000, IJoeDexLens.DataFeedType.V2_2);
+        dataFeeds[1] = IJoeDexLens.DataFeed(USDT, BNB_USDT_10BP, 100, IJoeDexLens.DataFeedType.V2_2);
 
         joeDexLens.initialize(dataFeeds);
     }
@@ -90,12 +90,12 @@ contract TestJoeDexLens is TestHelper {
 
         address newToken0 = address(new ERC20MockDecimals(6));
 
-        address pair0 = createLBPairV2_1(newToken0, USDC, ID_10_25bp);
+        address pair0 = createLBPairV2_2(newToken0, USDC, ID_10_25bp);
 
         vm.label(newToken0, "newToken0");
         vm.label(pair0, "token0_usdc_25bp");
 
-        addLiquidityV2_1(pair0, 1000e6, 100e6);
+        addLiquidityV2_2(pair0, 1000e6, 100e6);
 
         assertEq(joeDexLens.getTokenPriceUSD(address(newToken0)), 0, "test_GetTokenPriceUsingFallback::1");
 
@@ -123,8 +123,8 @@ contract TestJoeDexLens is TestHelper {
         vm.prank(Ownable(address(lbFactory)).owner());
         lbFactory.addQuoteAsset(IERC20(newToken0));
 
-        address pair1 = createLBPairV2_1(newToken1, newToken0, ID_0_25_25bp);
-        addLiquidityV2_1(pair1, 1000e8, 100e6);
+        address pair1 = createLBPairV2_2(newToken1, newToken0, ID_0_25_25bp);
+        addLiquidityV2_2(pair1, 1000e8, 100e6);
 
         assertEq(joeDexLens.getTokenPriceUSD(address(newToken1)), 0, "test_GetTokenPriceUsingFallback::4");
 
@@ -149,8 +149,8 @@ contract TestJoeDexLens is TestHelper {
             joeDexLens.getTokenPriceUSD(address(newToken1)), 2.5e18, 1e16, "test_GetTokenPriceUsingFallback::6"
         );
 
-        address pair2 = createLBPairV2_1(newToken1, USDC, ID_10_25bp);
-        addLiquidityV2_1(pair2, 1000e8, 100e6);
+        address pair2 = createLBPairV2_2(newToken1, USDC, ID_10_25bp);
+        addLiquidityV2_2(pair2, 1000e8, 100e6);
 
         assertApproxEqRel(
             joeDexLens.getTokenPriceUSD(address(newToken1)),

@@ -41,14 +41,14 @@ abstract contract TestHelper is Test {
     ILBRouter public constant lbRouter = ILBRouter(0xe98efCE22A8Ec0dd5dDF6C1A81B6ADD740176E98);
     ILBFactory public lbFactory = ILBFactory(0x7D73A6eFB91C89502331b2137c2803408838218b);
 
-    address public constant USDT = 0x64544969ed7EBf5f083679233325356EbE738930;
-    address public constant USDC = 0x7Ef95a0fEE0bF6Ff3bB2BA9Ba3bF8C7cA7Ef7E7A;
+    address public constant USDT = 0x7Ef95a0fEE0bF6Ff3bB2BA9Ba3bF8C7cA7Ef7E7A;
+    address public constant USDC = 0x64544969ed7EBf5f083679233325356EbE738930;
     address public constant WETH = 0x8BaBbB98678facC7342735486C851ABD7A0d17Ca;
-    address public constant wNative = 0x094616F0BdFB0b526bD735Bf66Eca0Ad254ca81F;
+    address public constant wNative = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd;
 
-    address public constant BNB_USDC_25BP = 0x5E4c51ab2EAa2fa9dB25Ea4638FfEF3c017Db34B;
-    address public constant BNB_USDT_10BP = 0x406Ca3B0acD27b8060c84902d2B0CAB6F5Ad898D;
-    address public constant USDC_USDT_1BP = 0xEC5255Ca9De7280439366F90ec29b03461EA5027;
+    address public constant BNB_USDC_25BP = 0x5E4c51ab2EAa2fa9dB25Ea4638FfEF3c017Db34B; // WBNB/USDC 25BP
+    address public constant BNB_USDT_10BP = 0x406Ca3B0acD27b8060c84902d2B0CAB6F5Ad898D; // WBNB/USDT 10BP
+    address public constant USDC_USDT_1BP = 0xEC5255Ca9De7280439366F90ec29b03461EA5027; // USDC/USDT 1BP
 
 
     JoeDexLens public joeDexLens;
@@ -67,11 +67,11 @@ abstract contract TestHelper is Test {
         vm.label(USDC_USDT_1BP, "usdc_usdt_1bp");
     }
 
-    function createLBPairV2_1(address tokenA, address quoteToken, uint24 id) internal returns (address) {
+    function createLBPairV2_2(address tokenA, address quoteToken, uint24 id) internal returns (address) {
         return address(lbFactory.createLBPair(IERC20(tokenA), IERC20(quoteToken), id, DEFAULT_BIN_STEP));
     }
 
-    function addLiquidityV2_1(address pair, uint256 amountX, uint256 amountY) internal {
+    function addLiquidityV2_2(address pair, uint256 amountX, uint256 amountY) internal {
         require(amountX > 0 && amountY > 0, "TestHelper: amount must be greater than 0");
 
         IERC20 tokenX = ILBPair(pair).getTokenX();
