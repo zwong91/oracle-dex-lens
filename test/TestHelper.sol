@@ -36,7 +36,7 @@ abstract contract TestHelper is Test {
 
     address public constant tokenOwner = 0xE0A051f87bb78f38172F633449121475a193fC1A;
     address public constant factoryOwner = 0xE0A051f87bb78f38172F633449121475a193fC1A;
-    address public constant bnbDataFeed = 0x0A77230d17318075983913bC2145DB16C7366156;
+    address public constant bnbDataFeed = 0x143db3CEEfbdfe5631aDD3E50f7614B6ba708BA7;
 
     ILBRouter public constant lbRouter = ILBRouter(0xe98efCE22A8Ec0dd5dDF6C1A81B6ADD740176E98);
     ILBFactory public lbFactory = ILBFactory(0x7D73A6eFB91C89502331b2137c2803408838218b);

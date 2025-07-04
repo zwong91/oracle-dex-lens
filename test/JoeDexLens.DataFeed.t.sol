@@ -16,7 +16,7 @@ contract TestJoeDexLens is TestHelper {
     IJoeFactory private _factoryV1 = IJoeFactory(address(0x1000000000000000000000000000000000000003));
 
     function setUp() public override {
-        vm.createSelectFork(vm.rpcUrl("bsc_testnet"), 44000000);
+        vm.createSelectFork(vm.rpcUrl("bsc_testnet"), 40000000);
         super.setUp();
 
         JoeDexLens imp = new JoeDexLens(lbFactory, lbFactory, _legacyFactory, _factoryV1, wNative);

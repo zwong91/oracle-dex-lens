@@ -21,7 +21,6 @@ contract DebugContract is Script {
         console.log("Contract Address:", JOEDEXLENS_PROXY);
         console.log("");
         
-        // 直接调用，不使用 try-catch
         console.log("Testing getWNative():");
         address wNative = joeDexLens.getWNative();
         console.log("WNative:", wNative);
