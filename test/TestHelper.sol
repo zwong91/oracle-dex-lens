@@ -34,60 +34,37 @@ abstract contract TestHelper is Test {
 
     uint24 internal constant ID_ONE = 2 ** 23;
 
-    address public constant tokenOwner = 0xFFC08538077a0455E0F4077823b1A0E3e18Faf0b;
+    address public constant tokenOwner = 0xE0A051f87bb78f38172F633449121475a193fC1A;
     address public constant factoryOwner = 0xE0A051f87bb78f38172F633449121475a193fC1A;
     address public constant bnbDataFeed = 0x0A77230d17318075983913bC2145DB16C7366156;
 
     ILBRouter public constant lbRouter = ILBRouter(0xe98efCE22A8Ec0dd5dDF6C1A81B6ADD740176E98);
     ILBFactory public lbFactory = ILBFactory(0x7D73A6eFB91C89502331b2137c2803408838218b);
-    ILBLegacyFactory public constant LBLegacyFactory = ILBLegacyFactory(0x6E77932A92582f504FF6c4BdbCef7Da6c198aEEf);
-    ILBLegacyRouter public constant LBLegacyRouter = ILBLegacyRouter(0xE3Ffc583dC176575eEA7FD9dF2A7c65F7E23f4C3);
-    IJoeFactory public constant factoryV1 = IJoeFactory(0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10);
 
-    address public constant USDT = 0x9702230A8Ea53601f5cD2dc00fDBc13d4dF4A8c7;
-    address public constant USDC = 0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E;
-    address public constant WETH = 0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB;
-    address public constant wNative = 0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7;
-    address public constant DAI = 0x1C5db575E2Ff833E46a2E9864C22F4B22E0B37C2;
-    address public constant JOE = 0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd;
-    address public constant ZJOE = 0x769bfeb9fAacD6Eb2746979a8dD0b7e9920aC2A4;
+    address public constant USDT = 0x64544969ed7EBf5f083679233325356EbE738930;
+    address public constant USDC = 0x7Ef95a0fEE0bF6Ff3bB2BA9Ba3bF8C7cA7Ef7E7A;
+    address public constant WETH = 0x8BaBbB98678facC7342735486C851ABD7A0d17Ca;
+    address public constant wNative = 0x094616F0BdFB0b526bD735Bf66Eca0Ad254ca81F;
 
-    address public constant BNB_USDC_V1 = 0xf4003F4efBE8691B60249E6afbD307aBE7758adb;
-    address public constant BNB_USDT_V1 = 0xbb4646a764358ee93c2a9c4a147d5aDEd527ab73;
-    address public constant BNB_ETH_V1 = 0xFE15c2695F1F920da45C30AAE47d11dE51007AF9;
+    address public constant BNB_USDC_25BP = 0x5E4c51ab2EAa2fa9dB25Ea4638FfEF3c017Db34B;
+    address public constant BNB_USDT_10BP = 0x406Ca3B0acD27b8060c84902d2B0CAB6F5Ad898D;
+    address public constant USDC_USDT_1BP = 0xEC5255Ca9De7280439366F90ec29b03461EA5027;
 
-    address public constant BNB_USDC_20BP = 0xD446eb1660F766d533BeCeEf890Df7A69d26f7d1;
-    address public constant BNB_USDT_20BP = 0x87EB2F90d7D0034571f343fb7429AE22C1Bd9F72;
-    address public constant BNB_ETH_10BP = 0x1901011a39B11271578a1283D620373aBeD66faA;
-    address public constant ETH_USDC_15BP = 0x51146e0bF2dCC368DE6F5201FE7c427DA28D05De;
-    address public constant JOE_USDC_25BP = 0x9A0A97D8005d9f783A054aa5CD8878bB0CCF414D;
-    address public constant DAI_USDC_1BP = 0x2f1DA4bafd5f2508EC2e2E425036063A374993B6;
-    address public constant JOE_BNB_15BP = 0x9f8973FB86b35C307324eC31fd81Cf565E2F4a63;
 
     JoeDexLens public joeDexLens;
 
     function setUp() public virtual {
-        vm.prank(factoryOwner);
-        LBLegacyFactory.setFactoryLockedState(false);
-
         vm.label(address(lbFactory), "factory");
         vm.label(address(lbRouter), "router");
-        vm.label(address(LBLegacyFactory), "legacyFactory");
-        vm.label(address(factoryV1), "joeFactoryV1");
+
         vm.label(USDC, "usdc");
         vm.label(USDT, "usdt");
         vm.label(WETH, "weth");
         vm.label(wNative, "wNative");
 
-        vm.label(BNB_USDC_V1, "bnb_usdc_v1");
-        vm.label(BNB_USDT_V1, "bnb_usdt_v1");
-        vm.label(BNB_ETH_V1, "bnb_eth_v1");
-
-        vm.label(BNB_USDC_20BP, "bnb_usdc_20bp");
-        vm.label(BNB_USDT_20BP, "bnb_usdt_20bp");
-        vm.label(BNB_ETH_10BP, "bnb_eth_10bp");
-        vm.label(JOE_USDC_25BP, "joe_usdc_25bp");
-        vm.label(DAI_USDC_1BP, "dai_usdc_1bp");
+        vm.label(BNB_USDC_25BP, "bnb_usdc_25bp");
+        vm.label(BNB_USDT_10BP, "bnb_usdt_10bp");
+        vm.label(USDC_USDT_1BP, "usdc_usdt_1bp");
     }
 
     function createLBPairV2_1(address tokenA, address quoteToken, uint24 id) internal returns (address) {
