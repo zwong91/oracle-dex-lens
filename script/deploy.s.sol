@@ -12,9 +12,9 @@ contract Deploy is Script {
     using stdJson for string;
 
     struct Deployment {
-        address joeFactory;
         address lbFactory2_1;
         address lbFactory2_2;
+        address joeFactory;
         address lbLegacyFactory;
         address multisig;
         address native_usd_aggregator;
@@ -33,7 +33,7 @@ contract Deploy is Script {
 
     function run() public returns (JoeDexLens[] memory, ProxyAdmin[] memory, TransparentUpgradeableProxy[] memory) {
         string memory json = vm.readFile("script/config/deployments.json");
-        uint256 deployerPrivateKey = vm.envUint("ETH_PRIVATE_KEY");
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
 
         for (uint256 i = 0; i < chains.length; i++) {
             bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", chains[i])));
