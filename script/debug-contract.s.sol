@@ -7,7 +7,7 @@ import "../src/interfaces/IJoeDexLens.sol";
 
 contract DebugContract is Script {
     // 已部署的代理合约地址
-    address constant JOEDEXLENS_PROXY = 0x8C7dc8184F5D78Aa40430b2d37f78fDC3e9A9b78;
+    address constant JOEDEXLENS_PROXY = 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9;
     
     // BSC测试网上的代币地址
     address constant WBNB = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd;

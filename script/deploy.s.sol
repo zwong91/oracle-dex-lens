@@ -21,10 +21,10 @@ contract Deploy is Script {
         address w_native;
     }
 
-    string[] chains = ["bnb_smart_chain_testnet"];
+    string[] chains = ["bnb_smart_chain"];
 
     function setUp() public {
-        _setupBSCTestnet();
+        _setupBSC();
     }
 
     JoeDexLens[] listJoeDexLens = new JoeDexLens[](chains.length);
@@ -98,6 +98,15 @@ contract Deploy is Script {
                 chainId: 97,
                 rpcUrl: "https://data-seed-prebsc-1-s1.bnbchain.org:8545"
             })
+        );
+    }
+
+    function _setupBSC() private {
+        // Use environment variable for RPC URL if available, fallback to default
+        string memory rpcUrl = vm.envOr("BSC_RPC_URL", string("https://bsc-dataseed.bnbchain.org"));
+
+        StdChains.setChain(
+            "bnb_smart_chain", StdChains.ChainData({name: "BNB Smart Chain", chainId: 56, rpcUrl: rpcUrl})
         );
     }
 }

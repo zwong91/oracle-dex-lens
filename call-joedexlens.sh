@@ -20,7 +20,7 @@ convert_wei_to_readable() {
 }
 
 # Contract address
-JOEDEXLENS_PROXY="0x8C7dc8184F5D78Aa40430b2d37f78fDC3e9A9b78"
+JOEDEXLENS_PROXY="0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9"
 
 # Token addresses on BSC Testnet
 WBNB="0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"

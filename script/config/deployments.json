@@ -1,12 +1,12 @@
 {
   "bnb_smart_chain": {
-    "lbFactory2_2": "0x0000000000000000000000000000000000000000",
-    "lbFactory2_1": "0x0000000000000000000000000000000000000000",
+    "lbFactory2_2": "0x55268e26DA30fEAc50B26511ba70C5Cac2Af43B8",
+    "lbFactory2_1": "0x5d0FDDbe7d4c2424F74E276db749E23206b925B9",
     "lbLegacyFactory": "0x0000000000000000000000000000000000000000",
     "joeFactory": "0x0000000000000000000000000000000000000000",
     "w_native": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "native_usd_aggregator": "0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE",
-    "multisig": "0xYourMetaMaskAddressHere"
+    "multisig": "0xE0A051f87bb78f38172F633449121475a193fC1A"
   },
   "bnb_smart_chain_testnet": {
     "lbFactory2_2": "0x7D73A6eFB91C89502331b2137c2803408838218b",
