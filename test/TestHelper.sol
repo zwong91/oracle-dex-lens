@@ -41,13 +41,13 @@ abstract contract TestHelper is Test {
     ILBRouter public constant lbRouter = ILBRouter(0xe98efCE22A8Ec0dd5dDF6C1A81B6ADD740176E98);
     ILBFactory public lbFactory = ILBFactory(0x7D73A6eFB91C89502331b2137c2803408838218b);
 
-    address public constant USDT = 0x7Ef95a0fEE0bF6Ff3bB2BA9Ba3bF8C7cA7Ef7E7A;
+    address public constant USDT = 0x337610d27c682E347C9cD60BD4b3b107C9d34dDd;
     address public constant USDC = 0x64544969ed7EBf5f083679233325356EbE738930;
     address public constant WETH = 0x8BaBbB98678facC7342735486C851ABD7A0d17Ca;
     address public constant wNative = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd;
 
     address public constant BNB_USDC_25BP = 0x5E4c51ab2EAa2fa9dB25Ea4638FfEF3c017Db34B; // WBNB/USDC 25BP
-    address public constant BNB_USDT_10BP = 0x406Ca3B0acD27b8060c84902d2B0CAB6F5Ad898D; // WBNB/USDT 10BP
+    address public constant BNB_USDT_10BP = 0x406Ca3B0acD27b8060c84902d2B0CAB6F5Ad898D; // WBNB/USDT 10BP (实际是WBNB/0x337610...)
     address public constant USDC_USDT_1BP = 0xEC5255Ca9De7280439366F90ec29b03461EA5027; // USDC/USDT 1BP
 
 

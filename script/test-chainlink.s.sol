@@ -52,9 +52,9 @@ contract TestChainlink is Script {
         try AggregatorV3Interface(aggregatorAddress).latestRoundData() returns (
             uint80 roundId,
             int256 price,
-            uint256 startedAt,
+            uint256 /* startedAt */,
             uint256 updatedAt,
-            uint80 answeredInRound
+            uint80 /* answeredInRound */
         ) {
             console.log("  Latest Price:", uint256(price));
             console.log("  Round ID:", roundId);

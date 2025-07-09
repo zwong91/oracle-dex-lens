@@ -19,7 +19,7 @@ clean:
 	forge clean
 
 test:
-	forge test -vvv
+	forge test -vvvv
 
 deploy-chapel:
 	forge script script/deploy.s.sol:Deploy --rpc-url bsc_testnet --broadcast
