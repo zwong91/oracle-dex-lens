@@ -90,7 +90,8 @@ echo "scale=6; 662675099090000000000 / 1000000000000000000" | bc
 
 ```javascript
 WBNB  = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd"
-BUSD  = "0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7" 
+BUSD  = "0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
+USDC  = "0x64544969ed7EBf5f083679233325356EbE738930"
 USDT  = "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684"
 ```
 
@@ -102,7 +103,7 @@ USDT  = "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684"
    - 通过Chainlink BNB/USD价格源获取BNB的USD价格
    - 计算最终的USD价格
 3. **数据来源**: 
-   - 使用Trader Joe的多个版本DEX (V1, V2, V2.1, V2.2)
+   - 使用Trader Joe的多个版本DEX (V2.1, V2.2)
    - 回退到Chainlink价格源
    - 支持自定义数据源配置
 
