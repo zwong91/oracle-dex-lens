@@ -167,9 +167,9 @@ contract TestJoeDexLens is TestHelper {
     function test_revert_BadDataFeeds() public {
         joeDexLens.addDataFeed(USDT, IJoeDexLens.DataFeed(wNative, BNB_USDT_10BP, 1000, IJoeDexLens.DataFeedType.V2_2));
 
-        // Revert if a cycle is detected (USDT -> wNative -> USDT -> wNative -> ...)
+        // Revert if trying to add the same data feed again (same token and same pair)
         vm.expectRevert();
-        joeDexLens.addDataFeed(wNative, IJoeDexLens.DataFeed(USDT, BNB_USDT_10BP, 1000, IJoeDexLens.DataFeedType.V2_2));
+        joeDexLens.addDataFeed(USDT, IJoeDexLens.DataFeed(wNative, BNB_USDT_10BP, 1000, IJoeDexLens.DataFeedType.V2_2));
 
         address newToken = address(new ERC20MockDecimals(18));
         vm.expectRevert(IJoeDexLens.JoeDexLens__InvalidDataFeed.selector);
@@ -181,20 +181,25 @@ contract TestJoeDexLens is TestHelper {
 
         vm.expectRevert(IJoeDexLens.JoeDexLens__V2_2ContractNotSet.selector);
         joeDexLens.addDataFeed(
-            address(0), IJoeDexLens.DataFeed(address(1), address(2), 0, IJoeDexLens.DataFeedType.V2_1)
+            address(0), IJoeDexLens.DataFeed(address(1), address(2), 1000, IJoeDexLens.DataFeedType.V2_2)
         );
         
         joeDexLens = new JoeDexLens(lbFactory, ILBFactory(address(0)), ILBLegacyFactory(address(0)), IJoeFactory(address(0)), wNative);
 
         vm.expectRevert(IJoeDexLens.JoeDexLens__V2_1ContractNotSet.selector);
         joeDexLens.addDataFeed(
-            address(0), IJoeDexLens.DataFeed(address(1), address(2), 0, IJoeDexLens.DataFeedType.V2_1)
+            address(0), IJoeDexLens.DataFeed(address(1), address(2), 1000, IJoeDexLens.DataFeedType.V2_1)
         );
 
         joeDexLens = new JoeDexLens(lbFactory, lbFactory, ILBLegacyFactory(address(0)), IJoeFactory(address(0)), wNative);
 
         vm.expectRevert(IJoeDexLens.JoeDexLens__V2ContractNotSet.selector);
-        joeDexLens.addDataFeed(address(0), IJoeDexLens.DataFeed(address(1), address(2), 0, IJoeDexLens.DataFeedType.V2_1));
+        joeDexLens.addDataFeed(address(0), IJoeDexLens.DataFeed(address(1), address(2), 1000, IJoeDexLens.DataFeedType.V2));
+
+        joeDexLens = new JoeDexLens(lbFactory, lbFactory, ILBLegacyFactory(address(0)), IJoeFactory(address(0)), wNative);
+
+        vm.expectRevert(IJoeDexLens.JoeDexLens__V1ContractNotSet.selector);
+        joeDexLens.addDataFeed(address(0), IJoeDexLens.DataFeed(address(1), address(2), 1000, IJoeDexLens.DataFeedType.V1));
 
         vm.expectRevert(IJoeDexLens.JoeDexLens__ZeroAddress.selector);
         new JoeDexLens(lbFactory, lbFactory, ILBLegacyFactory(address(0)), IJoeFactory(address(0)), address(0));
