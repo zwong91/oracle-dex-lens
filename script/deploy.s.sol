@@ -40,7 +40,9 @@ contract Deploy is Script {
             bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", chains[i])));
             Deployment memory deployment = abi.decode(rawDeploymentData, (Deployment));
 
-            console.log("\nDeploying Dex Lens on %s", chains[i]);
+            console.log("\n========================================");
+            console.log("Deploying Dex Lens on %s", chains[i]);
+            console.log("========================================");
 
             vm.createSelectFork(StdChains.getChain(chains[i]).rpcUrl);
 
@@ -49,7 +51,11 @@ contract Deploy is Script {
              */
             vm.startBroadcast(deployerPrivateKey);
 
+            console.log("1. Deploying ProxyAdmin...");
             ProxyAdmin proxyAdmin = new ProxyAdmin(msg.sender);
+            console.log("   ProxyAdmin deployed at: %s", address(proxyAdmin));
+
+            console.log("2. Deploying JoeDexLens implementation...");
             JoeDexLens implementation = new JoeDexLens(
                 ILBFactory(deployment.lbFactory2_2),
                 ILBFactory(deployment.lbFactory2_1),
@@ -57,7 +63,9 @@ contract Deploy is Script {
                 IJoeFactory(deployment.joeFactory),
                 deployment.w_native
             );
+            console.log("   JoeDexLens implementation deployed at: %s", address(implementation));
 
+            console.log("3. Setting up DataFeeds...");
             IJoeDexLens.DataFeed[] memory dataFeeds = new IJoeDexLens.DataFeed[](1);
 
             dataFeeds[0] = IJoeDexLens.DataFeed({
@@ -66,16 +74,26 @@ contract Deploy is Script {
                 dfWeight: 1000,
                 dfType: IJoeDexLens.DataFeedType.CHAINLINK
             });
+            console.log("   DataFeed configured for WBNB/USD: %s", deployment.native_usd_aggregator);
 
+            console.log("4. Deploying TransparentUpgradeableProxy...");
             TransparentUpgradeableProxy proxy = new TransparentUpgradeableProxy(
                 address(implementation),
                 address(proxyAdmin),
                 abi.encodeWithSelector(JoeDexLens.initialize.selector, dataFeeds)
             );
+            console.log("   *** MAIN CONTRACT (Proxy) deployed at: %s ***", address(proxy));
 
             listJoeDexLens[i] = implementation;
             listProxyAdmin[i] = proxyAdmin;
             listTransparentUpgradeableProxy[i] = proxy;
+
+            console.log("5. Deployment completed successfully!");
+            console.log("   Chain: %s (ID: %d)", chains[i], StdChains.getChain(chains[i]).chainId);
+            console.log("   Implementation: %s", address(implementation));
+            console.log("   ProxyAdmin: %s", address(proxyAdmin));
+            console.log("   *** MAIN CONTRACT ADDRESS (USE THIS): %s ***", address(proxy));
+            console.log("");
 
             // Note: Ownership transfer should be done manually after deployment
             // proxyAdmin.transferOwnership(deployment.multisig);
@@ -85,8 +103,11 @@ contract Deploy is Script {
             /**
              * Stop broadcasting the transaction to the network.
              */
+            console.log("6. Verifying deployment...");
             implementation.getFactoryV2_2();
             implementation.getFactoryV2_1();
+            console.log("   Verification complete!");
+            console.log("========================================\n");
         }
         return (listJoeDexLens, listProxyAdmin, listTransparentUpgradeableProxy);
     }
