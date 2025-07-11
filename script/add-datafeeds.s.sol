@@ -52,13 +52,15 @@ contract AddDataFeeds is Script {
     // Helper function to add a new data feed
     function _addDataFeed(IJoeDexLens joeDexLens, address token, address aggregator) internal {
         IJoeDexLens.DataFeed memory newDataFeed = IJoeDexLens.DataFeed({
-            collateralAddress: WBNB, // USD representation
+            collateralAddress: WBNB, // For USD price feeds, use WBNB as collateral
             dfAddress: aggregator,
             dfWeight: 1000, // 100% weight
             dfType: IJoeDexLens.DataFeedType.CHAINLINK
         });
 
         joeDexLens.addDataFeed(token, newDataFeed);
-        console.log("[SUCCESS] Added new data feed for token:", token);
+        console.log("[SUCCESS] Added USD data feed for token:", token);
+        console.log("  - Aggregator:", aggregator);
+        console.log("  - Collateral:", WBNB);
     }
 }
