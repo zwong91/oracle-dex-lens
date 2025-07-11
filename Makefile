@@ -8,7 +8,7 @@ endif
 include .env
 export
 
-.PHONY: all build clean test deploy-chapel deploy-mainnet call-joedexlens add-datafeeds debug-contract test-chainlink
+.PHONY: all build clean test deploy-testnet deploy-mainnet call-joedexlens debug-contract test-chainlink
 
 all: build
 
@@ -21,14 +21,11 @@ clean:
 test:
 	forge test -vvvv
 
-deploy-chapel:
-	forge script script/deploy.s.sol:Deploy --rpc-url bsc_testnet --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
+deploy-testnet:
+	NETWORK=testnet forge script script/deploy.s.sol:Deploy --rpc-url https://bsc-testnet.public.blastapi.io --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
 
 deploy-mainnet:
-	forge script script/deploy.s.sol:Deploy --rpc-url https://bsc-dataseed.bnbchain.org --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
-
-add-datafeeds:
-	forge script script/add-datafeeds-mainnet.s.sol:AddDataFeeds --rpc-url https://bsc-dataseed.bnbchain.org --broadcast
+	NETWORK=mainnet forge script script/deploy.s.sol:Deploy --rpc-url https://bsc-dataseed.bnbchain.org --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
 
 # Forge script version (limited output due to forge limitations)
 call-joedexlens-forge:
