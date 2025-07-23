@@ -12,13 +12,14 @@ contract Deploy is Script {
     using stdJson for string;
 
     struct Deployment {
-        address lbFactory2_1;
         address lbFactory2_2;
-        address joeFactory;
+        address lbFactory2_1;
         address lbLegacyFactory;
-        address multisig;
-        address native_usd_aggregator;
+        address joeFactory;
         address w_native;
+        address native_usd_aggregator;
+        address inverse_wbnb_aggregator;
+        address multisig;
     }
 
 <<<<<<< HEAD
@@ -77,8 +78,8 @@ contract Deploy is Script {
             JoeDexLens implementation = new JoeDexLens(
                 ILBFactory(deployment.lbFactory2_2),
                 ILBFactory(deployment.lbFactory2_1),
-                ILBLegacyFactory(deployment.lbLegacyFactory),
-                IJoeFactory(deployment.joeFactory),
+                ILBLegacyFactory(address(0)),
+                IJoeFactory(address(0)),
                 deployment.w_native
             );
             console.log("   JoeDexLens implementation deployed at: %s", address(implementation));

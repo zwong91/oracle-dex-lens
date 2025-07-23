@@ -41,11 +41,23 @@ info:
 	@echo "  - Mainnet: BSC Mainnet (Chain ID: 56)"
 	@echo ""
 	@echo "Deployment commands:"
-	@echo "  make deploy-testnet  - Deploy to BSC Testnet"
-	@echo "  make deploy-mainnet  - Deploy to BSC Mainnet"
+	@echo "  make deploy-testnet                     - Deploy OracleDexLens to BSC Testnet"
+	@echo "  make deploy-mainnet                     - Deploy OracleDexLens to BSC Mainnet"
+	@echo "  make deploy-inverse-aggregator-testnet  - Deploy InverseWBNBAggregator to testnet"
+	@echo "  make deploy-inverse-aggregator-mainnet  - Deploy InverseWBNBAggregator to mainnet"
+	@echo "  make add-datafeeds-testnet              - Add data feeds to testnet"
+	@echo "  make add-datafeeds-mainnet              - Add data feeds to mainnet"
+	@echo "  make verify-datafeeds-testnet           - Verify data feeds on testnet"
+	@echo "  make verify-datafeeds-mainnet           - Verify data feeds on mainnet"
 	@echo ""
 	@echo "Configuration files:"
 	@echo "  script/config/deployments.json - Network configurations"
+	@echo ""
+	@echo "Deployed contracts:"
+	@echo "  BSC Testnet:"
+	@echo "    - InverseWBNBAggregator: 0x440d1926FF183423EDC84a803f888915A1CDD8df"
+	@echo "  BSC Mainnet:"
+	@echo "    - InverseWBNBAggregator: 0xA89fe2F67d78F26F077E2811b2948399A4e5aF0A"
 	@echo ""
 
 deploy-chapel:
@@ -60,16 +72,34 @@ deploy-testnet: deploy-chapel
 deploy:
 	@echo "Usage: make deploy-testnet or make deploy-mainnet"
 
-add-datafeeds:
-	forge script script/add-datafeeds-mainnet.s.sol:AddDataFeeds --rpc-url https://bsc-dataseed.bnbchain.org --broadcast
->>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
+# Unified data feeds management (auto-detects network)
+add-datafeeds-mainnet:
+	forge script script/add-datafeeds.s.sol:AddDataFeeds --rpc-url https://bsc-dataseed.bnbchain.org --broadcast
 
 add-datafeeds-testnet:
 	forge script script/add-datafeeds.s.sol:AddDataFeeds --rpc-url bsc_testnet --broadcast
 
-# Deploy the inverse WBNB aggregator first
-deploy-inverse-aggregator:
+# Default to testnet for backwards compatibility
+add-datafeeds: add-datafeeds-testnet
+
+# Deploy the inverse WBNB aggregator
+deploy-inverse-aggregator-mainnet:
+	forge script script/deploy-inverse-aggregator.s.sol:DeployInverseAggregator --rpc-url https://bsc-dataseed.bnbchain.org --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
+
+deploy-inverse-aggregator-testnet:
 	forge script script/deploy-inverse-aggregator.s.sol:DeployInverseAggregator --rpc-url bsc_testnet --broadcast --verify --etherscan-api-key $$ETHERSCAN_API_KEY
+
+# Default to testnet for backwards compatibility
+deploy-inverse-aggregator: deploy-inverse-aggregator-testnet
+
+# Verify data feeds (auto-detects network)
+verify-datafeeds-mainnet:
+	forge script script/verify-datafeeds.s.sol --rpc-url https://bsc-dataseed.bnbchain.org
+
+verify-datafeeds-testnet:
+	forge script script/verify-datafeeds.s.sol --rpc-url bsc_testnet
+
+verify-datafeeds: verify-datafeeds-testnet
 
 # Forge script version (limited output due to forge limitations)
 call-dexlens-forge:

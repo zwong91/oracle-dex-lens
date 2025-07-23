@@ -6,6 +6,7 @@
     "joeFactory": "0x0000000000000000000000000000000000000000",
     "w_native": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     "native_usd_aggregator": "0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE",
+    "inverse_wbnb_aggregator": "0xA89fe2F67d78F26F077E2811b2948399A4e5aF0A",
     "multisig": "0xE0A051f87bb78f38172F633449121475a193fC1A"
   },
   "bnb_smart_chain_testnet": {
@@ -20,6 +21,7 @@
     "joeFactory": "0x0000000000000000000000000000000000000000",
     "w_native": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
     "native_usd_aggregator": "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526",
+    "inverse_wbnb_aggregator": "0x440d1926FF183423EDC84a803f888915A1CDD8df",
     "multisig": "0xE0A051f87bb78f38172F633449121475a193fC1A"
   }
 }
