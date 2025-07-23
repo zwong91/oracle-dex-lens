@@ -22,13 +22,6 @@ contract Deploy is Script {
         address multisig;
     }
 
-<<<<<<< HEAD
-    string[] chains = ["bnb_smart_chain_testnet", "bnb_smart_chain"];
-
-    function setUp() public {
-        _setupBSCTestnet();
-        _setupBSC();
-=======
     // Support both testnet and mainnet
     string[] chains;
     
@@ -43,7 +36,6 @@ contract Deploy is Script {
             chains = ["bnb_smart_chain_testnet"];
             _setupBSCTestnet();
         }
->>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
     }
 
     function run() public returns (JoeDexLens[] memory, ProxyAdmin[] memory, TransparentUpgradeableProxy[] memory) {
@@ -118,14 +110,6 @@ contract Deploy is Script {
             listProxyAdmin[i] = proxyAdmin;
             listTransparentUpgradeableProxy[i] = proxy;
 
-<<<<<<< HEAD
-            console.log("5. Deployment completed successfully!");
-            console.log("   Chain: %s (ID: %d)", chains[i], StdChains.getChain(chains[i]).chainId);
-            console.log("   Implementation: %s", address(implementation));
-            console.log("   ProxyAdmin: %s", address(proxyAdmin));
-            console.log("   *** MAIN CONTRACT ADDRESS (USE THIS): %s ***", address(proxy));
-            console.log("");
-=======
             // Log deployment information
             console.log("\n=== Deployment Successful on %s ===", chains[i]);
             console.log("Implementation Contract:    %s", address(implementation));
@@ -137,7 +121,6 @@ contract Deploy is Script {
             console.log("");
             console.log("Main contract to interact with: %s", address(proxy));
             console.log("=====================================\n");
->>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
 
             // Note: Ownership transfer should be done manually after deployment
             // proxyAdmin.transferOwnership(deployment.multisig);
@@ -147,13 +130,6 @@ contract Deploy is Script {
             /**
              * Stop broadcasting the transaction to the network.
              */
-<<<<<<< HEAD
-            console.log("6. Verifying deployment...");
-            implementation.getFactoryV2_2();
-            implementation.getFactoryV2_1();
-            console.log("   Verification complete!");
-            console.log("========================================\n");
-=======
             
             // Verify deployment by calling some view functions
             console.log("Verifying deployment...");
@@ -179,7 +155,6 @@ contract Deploy is Script {
             }
             
             console.log("Verification complete!\n");
->>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
         }
         return (listJoeDexLens, listProxyAdmin, listTransparentUpgradeableProxy);
     }
