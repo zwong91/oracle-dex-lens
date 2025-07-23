@@ -1,9 +1,10 @@
-# JoeDexLens 合约使用指南
+# OracleDexLens 合约使用指南
 
 ## 部署信息
 
-### BSC 测试网 
-- **主合约地址 (代理)**: `0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9`
+### BSC 测试网
+
+- **主合约地址 (代理)**: `0xb512457fcB3020dC4a62480925B68dc83E776340`
 - **实现合约地址**: `0x6a2a650C4646324F30f0D09bF5DC546c39F5D368`
 - **ProxyAdmin地址**: `0xbB6D6810a6eFE2519Bd7a2C917F9BE5B2CF82EBd`
 - **网络**: BSC Testnet (Chain ID: 97)
@@ -14,72 +15,82 @@
 ### 1. 价格查询功能
 
 #### 获取代币相对于原生代币(BNB)的价格
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokenPriceNative(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokenPriceNative(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
 ```
 
 #### 获取代币的USD价格 - WBNB价格约$662.68 USD（实时市场价格）
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokenPriceUSD(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokenPriceUSD(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
 ```
 
 #### 批量获取代币的原生价格 - WBNB价格返回1.0（符合预期）
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokensPricesNative(address[])" "[TOKEN1,TOKEN2,...]" --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokensPricesNative(address[])" "[TOKEN1,TOKEN2,...]" --rpc-url bsc_testnet
 ```
 
 #### 批量获取代币的USD价格
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokensPricesUSD(address[])" "[TOKEN1,TOKEN2,...]" --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokensPricesUSD(address[])" "[TOKEN1,TOKEN2,...]" --rpc-url bsc_testnet
 ```
 
 ### 2. 合约信息查询
 
 #### 获取包装原生代币地址- 返回正确的WBNB地址
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getWNative()" --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getWNative()" --rpc-url bsc_testnet
 ```
 
 #### 获取代币的数据源信息
+
 ```bash
-cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getDataFeeds(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
+cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getDataFeeds(address)" <TOKEN_ADDRESS> --rpc-url bsc_testnet
 ```
 
 ## 测试结果
 
 ### WBNB 价格测试
+
 ```bash
 # Native(WBNB)价格 (返回1.0（符合预期）)
-$ cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokenPriceNative(address)" 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd --rpc-url bsc_testnet
+$ cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokenPriceNative(address)" 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd --rpc-url bsc_testnet
 返回: 1000000000000000000 (= 1.0 in 18 decimals)
 
 # WBNB USD价格
-$ cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getTokenPriceUSD(address)" 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd --rpc-url bsc_testnet
+$ cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getTokenPriceUSD(address)" 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd --rpc-url bsc_testnet
 返回: 662675099090000000000 (= $662.68 USD)
 ```
 
 ### WNative地址查询
+
 ```bash
-$ cast call 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9 "getWNative()" --rpc-url bsc_testnet
+$ cast call 0xb512457fcB3020dC4a62480925B68dc83E776340 "getWNative()" --rpc-url bsc_testnet
 返回: 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd (BSC测试网WBNB地址)
 ```
 
 ## 快速使用脚本
 
-我们提供了一个便捷的脚本 `call-joedexlens.sh`，可以快速测试所有功能：
+我们提供了一个便捷的脚本 `call-OracleDexLens.sh`，可以快速测试所有功能：
 
 ```bash
 # 运行测试脚本
-./call-joedexlens.sh
+./call-OracleDexLens.sh
 ```
 
 ## 价格数据格式
 
 所有价格都以18位小数返回（wei格式）：
+
 - 返回值 `1000000000000000000` = 1.0
 - 要转换为可读格式：`price_in_wei / 10^18`
 
 ### 转换示例
+
 ```bash
 # 使用 bc 计算器转换
 echo "scale=6; 662675099090000000000 / 1000000000000000000" | bc
@@ -98,11 +109,11 @@ USDT  = "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684"
 ## 工作原理
 
 1. **原生价格查询**: 直接返回代币相对于WBNB的价格
-2. **USD价格查询**: 
+2. **USD价格查询**:
    - 先获取代币相对于WBNB的价格
    - 通过Chainlink BNB/USD价格源获取BNB的USD价格
    - 计算最终的USD价格
-3. **数据来源**: 
+3. **数据来源**:
    - 使用Trader Joe的多个版本DEX (V2.1, V2.2)
    - 回退到Chainlink价格源
    - 支持自定义数据源配置
@@ -115,9 +126,10 @@ USDT  = "0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684"
 
 ## 智能合约接口
 
-完整的接口定义可参考 `src/interfaces/IJoeDexLens.sol`
+完整的接口定义可参考 `src/interfaces/IOracleDexLens.sol`
 
 ### 主要函数签名
+
 ```solidity
 function getWNative() external view returns (address);
 function getTokenPriceNative(address token) external view returns (uint256);

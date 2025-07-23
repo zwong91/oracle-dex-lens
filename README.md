@@ -1,22 +1,25 @@
-# JoeDexLens
+# OracleDexLens
 
-This repository contains JoeDexLens contract, which purpose is to provide token pricing based on arbitrarily chosen markets. 
+This repository contains OracleDexLens contract, which purpose is to provide token pricing based on arbitrarily chosen markets.
 
 This contract is not supposed to provide price oracle for any financial operations - should be seen only as helper contract for statistical/analytical purposes.
 
 This contract provides four functions for reading token price:
+
 - `getTokenPriceUSD`
 - `getTokensPricesUSD`
 - `getTokenPriceAVAX`
 - `getTokensPricesAVAX`
 
 To add markets, use the following four functions:
+
 - `addUSDDataFeed`
 - `addUSDDataFeeds`
 - `addNativeDataFeed`
 - `addNativeDataFeeds`
 
 To set the weight of a data feed, use the following four functions:
+
 - `setUSDDataFeedWeight`
 - `setUSDDataFeedsWeights`
 - `setNativeDataFeedWeight`

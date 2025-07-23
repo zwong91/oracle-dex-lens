@@ -21,20 +21,38 @@ contract Deploy is Script {
         address w_native;
     }
 
+<<<<<<< HEAD
     string[] chains = ["bnb_smart_chain_testnet", "bnb_smart_chain"];
 
     function setUp() public {
         _setupBSCTestnet();
         _setupBSC();
+=======
+    // Support both testnet and mainnet
+    string[] chains;
+    
+    function setUp() public {
+        // Check environment variable to determine which network to deploy to
+        string memory targetNetwork = vm.envOr("TARGET_NETWORK", string("testnet"));
+        
+        if (keccak256(abi.encodePacked(targetNetwork)) == keccak256(abi.encodePacked("mainnet"))) {
+            chains = ["bnb_smart_chain"];
+            _setupBSC();
+        } else {
+            chains = ["bnb_smart_chain_testnet"];
+            _setupBSCTestnet();
+        }
+>>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
     }
-
-    JoeDexLens[] listJoeDexLens = new JoeDexLens[](chains.length);
-    ProxyAdmin[] listProxyAdmin = new ProxyAdmin[](chains.length);
-    TransparentUpgradeableProxy[] listTransparentUpgradeableProxy = new TransparentUpgradeableProxy[](chains.length);
 
     function run() public returns (JoeDexLens[] memory, ProxyAdmin[] memory, TransparentUpgradeableProxy[] memory) {
         string memory json = vm.readFile("script/config/deployments.json");
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+
+        // Initialize arrays based on chains length
+        JoeDexLens[] memory listJoeDexLens = new JoeDexLens[](chains.length);
+        ProxyAdmin[] memory listProxyAdmin = new ProxyAdmin[](chains.length);
+        TransparentUpgradeableProxy[] memory listTransparentUpgradeableProxy = new TransparentUpgradeableProxy[](chains.length);
 
         for (uint256 i = 0; i < chains.length; i++) {
             bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", chains[i])));
@@ -88,12 +106,26 @@ contract Deploy is Script {
             listProxyAdmin[i] = proxyAdmin;
             listTransparentUpgradeableProxy[i] = proxy;
 
+<<<<<<< HEAD
             console.log("5. Deployment completed successfully!");
             console.log("   Chain: %s (ID: %d)", chains[i], StdChains.getChain(chains[i]).chainId);
             console.log("   Implementation: %s", address(implementation));
             console.log("   ProxyAdmin: %s", address(proxyAdmin));
             console.log("   *** MAIN CONTRACT ADDRESS (USE THIS): %s ***", address(proxy));
             console.log("");
+=======
+            // Log deployment information
+            console.log("\n=== Deployment Successful on %s ===", chains[i]);
+            console.log("Implementation Contract:    %s", address(implementation));
+            console.log("Proxy Admin:               %s", address(proxyAdmin));
+            console.log("Proxy Contract (Main):     %s", address(proxy));
+            console.log("WBNB/WNATIVE:             %s", deployment.w_native);
+            console.log("Chainlink BNB/USD Feed:   %s", deployment.native_usd_aggregator);
+            console.log("Multisig Owner:           %s", deployment.multisig);
+            console.log("");
+            console.log("Main contract to interact with: %s", address(proxy));
+            console.log("=====================================\n");
+>>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
 
             // Note: Ownership transfer should be done manually after deployment
             // proxyAdmin.transferOwnership(deployment.multisig);
@@ -103,11 +135,39 @@ contract Deploy is Script {
             /**
              * Stop broadcasting the transaction to the network.
              */
+<<<<<<< HEAD
             console.log("6. Verifying deployment...");
             implementation.getFactoryV2_2();
             implementation.getFactoryV2_1();
             console.log("   Verification complete!");
             console.log("========================================\n");
+=======
+            
+            // Verify deployment by calling some view functions
+            console.log("Verifying deployment...");
+            console.log("Factory V2.2:             %s", address(implementation.getFactoryV2_2()));
+            console.log("Factory V2.1:             %s", address(implementation.getFactoryV2_1()));
+            console.log("WNative from contract:    %s", implementation.getWNative());
+            
+            // Test the proxy contract
+            JoeDexLens proxyContract = JoeDexLens(address(proxy));
+            console.log("Proxy WNative:            %s", proxyContract.getWNative());
+            
+            // Check if native token price can be fetched
+            try proxyContract.getTokenPriceNative(deployment.w_native) returns (uint256 nativePrice) {
+                console.log("Native token price:       %s", nativePrice);
+            } catch {
+                console.log("Native token price:       Failed to fetch (may be normal if no liquidity)");
+            }
+            
+            try proxyContract.getTokenPriceUSD(deployment.w_native) returns (uint256 usdPrice) {
+                console.log("USD price:                %s", usdPrice);
+            } catch {
+                console.log("USD price:                Failed to fetch (may be normal initially)");
+            }
+            
+            console.log("Verification complete!\n");
+>>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
         }
         return (listJoeDexLens, listProxyAdmin, listTransparentUpgradeableProxy);
     }

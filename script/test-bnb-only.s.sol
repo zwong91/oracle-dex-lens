@@ -6,7 +6,7 @@ import "forge-std/console.sol";
 import "../src/interfaces/IJoeDexLens.sol";
 
 contract TestBNBOnly is Script {
-    address constant JOEDEXLENS_PROXY = 0xE47Fe3F5e9853582104bF0d9d086A803575A9FB9;
+    address constant JOEDEXLENS_PROXY = 0xb512457fcB3020dC4a62480925B68dc83E776340;
     address constant WBNB = 0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd;
     
     function run() external view {

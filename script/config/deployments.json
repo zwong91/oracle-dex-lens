@@ -9,8 +9,13 @@
     "multisig": "0xE0A051f87bb78f38172F633449121475a193fC1A"
   },
   "bnb_smart_chain_testnet": {
+<<<<<<< HEAD
     "lbFactory2_2": "0x7D73A6eFB91C89502331b2137c2803408838218b",
     "lbFactory2_1": "0x0000000000000000000000000000000000000000",
+=======
+    "lbFactory2_2": "0x0fb6A3D80891Ca222E94584599eF9702000814F6",
+    "lbFactory2_1": "0x325ACCD2Fdc160C246B5af1F040D661EB38c9c68", 
+>>>>>>> 262e00e (Add OracleDexLens documentation, scripts, and update contract references)
     "lbLegacyFactory": "0x0000000000000000000000000000000000000000",
     "joeFactory": "0x0000000000000000000000000000000000000000",
     "w_native": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
