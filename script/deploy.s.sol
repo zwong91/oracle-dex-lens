@@ -56,8 +56,19 @@ contract Deploy is Script {
         TransparentUpgradeableProxy[] memory listTransparentUpgradeableProxy = new TransparentUpgradeableProxy[](chains.length);
 
         for (uint256 i = 0; i < chains.length; i++) {
-            bytes memory rawDeploymentData = json.parseRaw(string(abi.encodePacked(".", chains[i])));
-            Deployment memory deployment = abi.decode(rawDeploymentData, (Deployment));
+            string memory networkKey = string(abi.encodePacked(".", chains[i]));
+            
+            // Create deployment struct with direct parsing
+            Deployment memory deployment = Deployment({
+                lbFactory2_2: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".lbFactory2_2"))),
+                lbFactory2_1: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".lbFactory2_1"))),
+                lbLegacyFactory: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".lbLegacyFactory"))),
+                joeFactory: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".joeFactory"))),
+                w_native: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".w_native"))),
+                native_usd_aggregator: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".native_usd_aggregator"))),
+                inverse_wbnb_aggregator: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".inverse_wbnb_aggregator"))),
+                multisig: vm.parseJsonAddress(json, string(abi.encodePacked(networkKey, ".multisig")))
+            });
 
             console.log("\n========================================");
             console.log("Deploying Dex Lens on %s", chains[i]);

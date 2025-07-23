@@ -43,11 +43,11 @@ contract AddDataFeeds is Script {
         } else if (chainId == 56) {
             // BSC主网配置
             return NetworkConfig({
-                oracleDexLensProxy: 0x817cF81C5FA4a5AF9F87010B7a9A20a60b485850,
+                oracleDexLensProxy: 0x8F4598bDfE142d2C8930a6A6c1B3F92e3975AeB1,
                 wbnb: 0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c,
                 usdc: 0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d,
                 usdt: 0x55d398326f99059fF775485246999027B3197955,
-                inverseWbnbAggregator: 0x0000000000000000000000000000000000000000, // TODO: 部署后更新
+                inverseWbnbAggregator: 0xA89fe2F67d78F26F077E2811b2948399A4e5aF0A,
                 bnbUsdAggregator: 0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE,
                 usdcUsdAggregator: 0x51597f405303C4377E36123cBc172b13269EA163,
                 usdtUsdAggregator: 0xB97Ad0E74fa7d920791E90258A6E2085088b4320,
